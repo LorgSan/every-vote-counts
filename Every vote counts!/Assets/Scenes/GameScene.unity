@@ -243,7 +243,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -272,11 +272,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1547593011 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3697619547516114792, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-  m_PrefabInstance: {fileID: 2058791590}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1708248701
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1176203356}
-  ballot: {fileID: 1547593011}
+  ballot: {fileID: 0}
+  ballotPanel: {fileID: 0}
 --- !u!4 &1708248703
 Transform:
   m_ObjectHideFlags: 0
@@ -322,76 +318,134 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2058791590
-PrefabInstance:
+--- !u!1 &1842939126
+GameObject:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1842939128}
+  - component: {fileID: 1842939127}
+  m_Layer: 0
+  m_Name: LineDrawer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1842939127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842939126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d6c50ba53ee9c419913e4beb018a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Line: {fileID: 0}
+  currentLine: {fileID: 0}
+  lineRenderer: {fileID: 0}
+  edgeCollider: {fileID: 0}
+  fingerPositions: []
+--- !u!4 &1842939128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842939126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8802258, y: 0.022389181, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104828553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104828556}
+  - component: {fileID: 2104828555}
+  - component: {fileID: 2104828554}
+  m_Layer: 0
+  m_Name: Main Camera (1)
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!81 &2104828554
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104828553}
+  m_Enabled: 1
+--- !u!20 &2104828555
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104828553}
+  m_Enabled: 1
   serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 577400462536323071, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 577400462536323071, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1635373865367225575, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_Name
-      value: BallotHolder
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.19058394
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -20.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 36.66822
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3149464753544155642, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3697619547516114792, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_Name
-      value: Ballot
-      objectReference: {fileID: 0}
-    - target: {fileID: 8692660532876022369, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1176203356}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 26e82a345dc13e14fa567873bb041afd, type: 3}
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.21960664, g: 0.29937312, b: 0.3301887, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 23
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &2104828556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104828553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

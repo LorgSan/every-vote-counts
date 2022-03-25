@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public enum State //creating an enumeration of all the states we possess
     {
-        GivingBlank,
+        CreateBlank,
+        GiveBlank,
         Vote,
         Unvote,
     }
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _currentState = value;
+            TransitionStates(value);
         }
     }
     #endregion
@@ -55,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        CurrentState = State.GivingBlank;
+        CurrentState = State.CreateBlank;
     }
 
 
@@ -67,29 +69,41 @@ public class GameManager : MonoBehaviour
 
     #region StateMachine
 
-        /// <summary>
-    /// Sets any initial values or one off methods when we're moving between states
-    /// </summary>
-    // private void TransitionStates(State newState) // ??? I'm not sure what's the difference between both
-    // {
-    //     switch (newState)
-    //     {
-    //         case State.GivingBlank:
-    //             //GivingBlank();
-    //             break;
-    //         case State.Vote:
-    //             break;
-    //         case State.Unvote:
-    //             break;
-    //     }
-    // }
+    public Camera cam; 
+    [HideInInspector]
+    public GameObject ballot;
+    [HideInInspector]
+    public GameObject ballotPanel;
+
+        // <summary>
+    // Sets any initial values or one off methods when we're moving between states
+        // </summary>
+     private void TransitionStates(State newState)
+     {
+         switch (newState)
+         {
+             case State.CreateBlank:
+                ballot = Instantiate(Resources.Load("Ballot")) as GameObject; //here we're creating the prefab;
+                GameObject canvas1 = ballot.transform.GetChild(0).gameObject;
+                canvas1.GetComponent<Canvas>().worldCamera = cam;
+                ballotPanel = canvas1.transform.GetChild(0).gameObject;
+                CurrentState = State.GiveBlank;
+                 break;
+             case State.Vote:
+                 break;
+             case State.Unvote:
+                 break;
+         }
+     }
 
     private void RunStates()
     {
         switch (CurrentState)
         {
-            case State.GivingBlank:
-            GivingBlank();
+            case State.CreateBlank:
+                break;
+            case State.GiveBlank:
+                GiveBlank();
                 break;
             case State.Vote:
                 Debug.Log("Voting!");
@@ -99,22 +113,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    public Camera cam; 
-    public GameObject ballot;
     float step;
 
-    void GivingBlank(){
-
-        //GameObject ballot = Instantiate(Resources.Load("Ballot")) as GameObject; //here we're creating the prefab
-        
-        GameObject canvas1 = ballot.transform.GetChild(0).gameObject; //and setting its canvases to our camera
-        canvas1.GetComponent<Canvas>().worldCamera = cam;
-        GameObject ballotPanel = canvas1.transform.GetChild(0).gameObject;
-        //Debug.Log(ballotPanel);
+    void GiveBlank(){
 
         step = 50f * Time.deltaTime;
-        Vector3 newPosY = new Vector3(ballotPanel.transform.position.x, 0f, 0f);
+        Vector3 newPosY = new Vector3(ballotPanel.transform.position.x, 0f, +1f);
         ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosY, step);
 
         if (ballotPanel.transform.position.y == 0f)
