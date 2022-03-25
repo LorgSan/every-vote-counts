@@ -15,6 +15,7 @@ public class Draw : MonoBehaviour
     public EdgeCollider2D edgeCollider;
     [HideInInspector]
     public List<Vector2> fingerPositions; 
+    bool LineWasStarted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,22 +30,31 @@ public class Draw : MonoBehaviour
 
     void StatementChecker()
     {
-        if(Input.GetMouseButtonDown(0)) 
-        {
-            CreateLine();
-        }
-        if(Input.GetMouseButton(0))
-        {
-            Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count -1]) > 0.1f)
+            if (GameManager.AllowDraw == true)
             {
-                UpdateLine(tempFingerPos);
-            }
-        }
+                if(Input.GetMouseButtonDown(0)) 
+                {
+                    CreateLine();
+
+                }
+                if(Input.GetMouseButton(0))
+                {
+                    if (LineWasStarted == true){
+                        
+                        Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        if (Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count -1]) > 0.1f)
+                        {
+                            UpdateLine(tempFingerPos);
+                        }
+                    }
+                }  
+            }          
+
     }
 
     void CreateLine()
     {
+        LineWasStarted = true;
         currentLine = Instantiate(Resources.Load("Line") as GameObject, Vector3.zero, Quaternion.identity);
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider = currentLine.GetComponent<EdgeCollider2D>();

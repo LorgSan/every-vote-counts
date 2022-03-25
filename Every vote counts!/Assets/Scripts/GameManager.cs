@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         RunStates();
+        //Debug.Log(AllowDraw);
     }   
 
 
@@ -74,6 +75,8 @@ public class GameManager : MonoBehaviour
     public GameObject ballot;
     [HideInInspector]
     public GameObject ballotPanel;
+    public static bool AllowDraw = false;
+    float step;
 
         // <summary>
     // Sets any initial values or one off methods when we're moving between states
@@ -89,6 +92,8 @@ public class GameManager : MonoBehaviour
                 ballotPanel = canvas1.transform.GetChild(0).gameObject;
                 CurrentState = State.GiveBlank;
                  break;
+            case State.GiveBlank:
+                break;
              case State.Vote:
                  break;
              case State.Unvote:
@@ -106,14 +111,13 @@ public class GameManager : MonoBehaviour
                 GiveBlank();
                 break;
             case State.Vote:
-                Debug.Log("Voting!");
+                //Debug.Log("Voting!");
+                AllowDraw = true;
                 break;
             case State.Unvote:
                 break;
         }
     }
-
-    float step;
 
     void GiveBlank(){
 
@@ -123,14 +127,13 @@ public class GameManager : MonoBehaviour
 
         if (ballotPanel.transform.position.y == 0f)
         {
-            step = 5f * Time.deltaTime;
-            Vector3 newPosX = new Vector3(-1f, ballotPanel.transform.position.y, 0f);
+            step = 4f * Time.deltaTime;
+            Vector3 newPosX = new Vector3(-1f, ballotPanel.transform.position.y, +1f);
             ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosX, step);
-        }
-
-        if (ballotPanel.transform.position.x == -1f)
-        {
-            CurrentState = State.Vote;
+            if (ballotPanel.transform.position == newPosX)
+            {
+                CurrentState = State.Vote;
+            }
         }
     }
 
