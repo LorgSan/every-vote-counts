@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
                 AllowDraw = true;
                 break;
             case State.Unvote:
+                //Debug.Log ("выбор сделан!");
                 break;
         }
     }

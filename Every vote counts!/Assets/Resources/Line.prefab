@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4058428998850010752}
   - component: {fileID: 4921629156419348300}
   - component: {fileID: 6647462926402111362}
-  - component: {fileID: 2308700805820006276}
+  - component: {fileID: -705828714408183574}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3660875762904613152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.253, y: 1.5254054, z: 79.89183}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.08
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -123,7 +123,7 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 3
+    numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
     textureMode: 0
@@ -153,7 +153,7 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!50 &2308700805820006276
+--- !u!50 &-705828714408183574
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
