@@ -36,7 +36,9 @@ public class GameManager : MonoBehaviour
         CreateBlank,
         GiveBlank,
         Vote,
+        CheckVote,
         Unvote,
+        SwitchVote,
     }
 
     private State _currentState;
@@ -94,9 +96,10 @@ public class GameManager : MonoBehaviour
                  break;
             case State.GiveBlank:
                 break;
-             case State.Vote:
+             case State.CheckVote:
                  break;
-             case State.Unvote:
+             case State.SwitchVote:
+                OneTimeSwitchVote();
                  break;
          }
      }
@@ -111,10 +114,14 @@ public class GameManager : MonoBehaviour
                 GiveBlank();
                 break;
             case State.Vote:
-                //Debug.Log("Voting!");
                 AllowDraw = true;
                 break;
-            case State.Unvote:
+            case State.CheckVote:
+                Debug.Log("checking");
+                CheckVote();
+                //Debug.Log("Voting!");
+                break;
+            case State.SwitchVote:     
                 SwitchVote();
                 break;
         }
@@ -138,9 +145,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void CheckVote()
+    {
+        bool IsPutin = TickVoted.GetComponent<LineChecker>().AmIPutin;
+        if (IsPutin == false)
+        {
+            Debug.Log("not putin!");
+            CurrentState = State.SwitchVote;
+        } else Debug.Log("putin!");
+    }
+
+    public static GameObject TickVoted;
+    public static GameObject PanelVoted;
+    public GameObject Putin;
+    public Vector3 putinPos;
+    public Vector3 panelPos;
+
     void SwitchVote()
     {
-        
+        step = 4f * Time.deltaTime;
+        bool IsPutin = TickVoted.GetComponent<LineChecker>().AmIPutin;
+        Putin.transform.position = Vector3.MoveTowards(Putin.transform.position, panelPos, step);
+        PanelVoted.transform.position = Vector3.MoveTowards(PanelVoted.transform.position, putinPos, step);
+    }
+
+    void OneTimeSwitchVote()
+    {
+        putinPos = Putin.transform.position;
+        panelPos = PanelVoted.transform.position;
     }
 
     #endregion
