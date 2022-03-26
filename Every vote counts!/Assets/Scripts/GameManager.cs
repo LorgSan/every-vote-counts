@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
                 AllowDraw = true;
                 break;
             case State.Unvote:
-                //Debug.Log ("выбор сделан!");
+                SwitchVote();
                 break;
         }
     }
@@ -136,6 +136,11 @@ public class GameManager : MonoBehaviour
                 CurrentState = State.Vote;
             }
         }
+    }
+
+    void SwitchVote()
+    {
+        
     }
 
     #endregion

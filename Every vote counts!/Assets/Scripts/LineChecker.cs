@@ -5,8 +5,8 @@ using UnityEngine;
 public class LineChecker : MonoBehaviour
 {   
     GameManager myManager;
-    GameObject Panel;
-    bool AmIPutin;
+    public GameObject Panel;
+    public bool AmIPutin;
 
     void Start ()
     {

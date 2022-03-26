@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2079934614823933061}
   - component: {fileID: 4731743379866357467}
   m_Layer: 5
-  m_Name: Panel 2
+  m_Name: Panel 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ RectTransform:
   - {fileID: 2491103816997890584}
   - {fileID: 1921742959512125155}
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 5074285258579247093}
   - component: {fileID: 3891252980119615027}
   m_Layer: 5
-  m_Name: Panel 1
+  m_Name: Panel 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,7 +189,7 @@ RectTransform:
   - {fileID: 8156318231416684723}
   - {fileID: 9077334832155175080}
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 9113035461123922031}
   - component: {fileID: 7924282758980641427}
   m_Layer: 5
-  m_Name: Tick
+  m_Name: Tick 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -461,7 +461,7 @@ RectTransform:
   m_LocalScale: {x: 0.006257963, y: 0.006257963, z: 0.006257963}
   m_Children: []
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -480,6 +480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec7f7d231720fc458d73f9e254b831f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Panel: {fileID: 9158824244240217134}
+  AmIPutin: 0
 --- !u!222 &115205729655931794
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -603,14 +605,14 @@ Transform:
   m_LocalScale: {x: 108, y: 108, z: 108}
   m_Children:
   - {fileID: 8692660532735784955}
-  - {fileID: 7888355563554977317}
   - {fileID: 1437510278088685573}
-  - {fileID: 5566565296213655889}
+  - {fileID: 7888355563554977317}
   - {fileID: 6107027940245883412}
-  - {fileID: 8841509211016176077}
+  - {fileID: 5566565296213655889}
   - {fileID: 6649461891464366604}
-  - {fileID: 6267575383602072033}
+  - {fileID: 8841509211016176077}
   - {fileID: 1323645147843837243}
+  - {fileID: 6267575383602072033}
   m_Father: {fileID: 577400462536323071}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -707,7 +709,7 @@ GameObject:
   - component: {fileID: 633995480588026955}
   - component: {fileID: 8321008494360758982}
   m_Layer: 5
-  m_Name: Tick
+  m_Name: Tick 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -725,7 +727,7 @@ RectTransform:
   m_LocalScale: {x: 0.006257963, y: 0.006257963, z: 0.006257963}
   m_Children: []
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -744,6 +746,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec7f7d231720fc458d73f9e254b831f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Panel: {fileID: 420999914855821708}
+  AmIPutin: 1
 --- !u!222 &6793073071026285778
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -899,7 +903,7 @@ GameObject:
   - component: {fileID: 978489732470812179}
   - component: {fileID: 6823875192728860637}
   m_Layer: 5
-  m_Name: Panel 4
+  m_Name: Panel 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -919,7 +923,7 @@ RectTransform:
   - {fileID: 7823080261183773804}
   - {fileID: 3166561151893541525}
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1296,7 +1300,7 @@ GameObject:
   - component: {fileID: 9118456590506641567}
   - component: {fileID: 8273418505557022851}
   m_Layer: 5
-  m_Name: Tick
+  m_Name: Tick 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1314,7 +1318,7 @@ RectTransform:
   m_LocalScale: {x: 0.006257963, y: 0.006257963, z: 0.006257963}
   m_Children: []
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1333,6 +1337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec7f7d231720fc458d73f9e254b831f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Panel: {fileID: 817032434296036044}
+  AmIPutin: 0
 --- !u!222 &2703449597444555952
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1851,7 +1857,7 @@ GameObject:
   - component: {fileID: 485232708299744058}
   - component: {fileID: 7411280224588310975}
   m_Layer: 5
-  m_Name: Tick
+  m_Name: Tick 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1869,7 +1875,7 @@ RectTransform:
   m_LocalScale: {x: 0.006257963, y: 0.006257963, z: 0.006257963}
   m_Children: []
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1888,6 +1894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec7f7d231720fc458d73f9e254b831f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Panel: {fileID: 5070722908919377684}
+  AmIPutin: 0
 --- !u!222 &7637118031084644152
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2077,7 +2085,7 @@ GameObject:
   - component: {fileID: 2077746547916618186}
   - component: {fileID: 1734662511226165823}
   m_Layer: 5
-  m_Name: Panel 3
+  m_Name: Panel 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2097,7 +2105,7 @@ RectTransform:
   - {fileID: 5289282001324023591}
   - {fileID: 1983451190784351760}
   m_Father: {fileID: 2037445815917283973}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
