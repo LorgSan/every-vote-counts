@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
         }
         else if (instance == null)
         {
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
             instance = this;
         }
     }
@@ -57,9 +58,12 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    Scene scene;
 
     void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Scene scene = SceneManager.GetActiveScene();
         CurrentState = State.CreateBlank;
     }
 
@@ -68,16 +72,28 @@ public class GameManager : MonoBehaviour
     {
         RunStates();
         //Debug.Log(AllowDraw);
+        InputChecker();
     }   
+
+    void InputChecker()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            UtilScript.GoToScene("GameScene");
+        }
+    }
 
 
     #region StateMachine
 
+    [HideInInspector]
     public Camera cam; 
     [HideInInspector]
     public GameObject ballot;
     [HideInInspector]
     public GameObject ballotPanel;
+    [HideInInspector]
+    public GameObject endingPanel;
     public static bool AllowDraw = false;
     float step;
     bool FirstVote = false;
@@ -91,11 +107,13 @@ public class GameManager : MonoBehaviour
          switch (newState)
          {
              case State.CreateBlank:
+                Debug.Log("Create Blank!");
                 ballot = Instantiate(Resources.Load("Ballot")) as GameObject; //here we're creating the prefab;
                 GameObject canvas1 = ballot.transform.GetChild(0).gameObject;
                 canvas1.GetComponent<Canvas>().worldCamera = cam;
                 ballotPanel = canvas1.transform.GetChild(0).gameObject;
                 Button = ballotPanel.transform.GetChild(0).gameObject;
+                endingPanel = canvas1.transform.GetChild(1).gameObject;
                 CurrentState = State.GiveBlank;
                  break;
             case State.GiveBlank:
@@ -107,6 +125,9 @@ public class GameManager : MonoBehaviour
                  break;
             case State.End:
                 //LinesDestroyer();
+                break;
+            default:
+                Debug.Log("default state");
                 break;
          }
      }
@@ -129,11 +150,14 @@ public class GameManager : MonoBehaviour
                     CheckVote();
                 }
                 break;
-            case State.SwitchVote:     
+            case State.SwitchVote:
                 SwitchVote();
                 break;
             case State.End:
                 FinishButton();
+                break;
+            default:
+                //Debug.Log("default state");
                 break;
         }
     }
@@ -164,10 +188,11 @@ public class GameManager : MonoBehaviour
             FirstVote = true;
             Button.SetActive(true);
         }
+
         bool IsPutin = TickVoted.GetComponent<LineChecker>().AmIPutin;
         if (IsPutin == false) 
         {
-            Debug.Log("not putin!");
+            //Debug.Log("not putin!");
             CurrentState = State.SwitchVote;
         } else         
         
@@ -180,9 +205,11 @@ public class GameManager : MonoBehaviour
 
     public static GameObject TickVoted;
     public static GameObject PanelVoted;
+    [HideInInspector]
     public GameObject Putin;
-    public Vector3 putinPos;
-    public Vector3 panelPos;
+    Vector3 putinPos;
+    Vector3 panelPos;
+    [HideInInspector]
     public GameObject LineVote;
 
     void SwitchVote()
@@ -211,13 +238,26 @@ public class GameManager : MonoBehaviour
     {
         AllowDraw = false;
         //ballotPanel.GetComponent<Animator>().SetTrigger("End");
-
-        step = 20f * Time.deltaTime;
+        
+        step = 4f * Time.deltaTime;
         Vector3 newPosUp = new Vector3 (ballotPanel.transform.position.x, +12f, 0f);
         ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosUp, step);
-
+        Vector3 buttonPosUp = new Vector3 (Button.transform.position.x, +12f, 0f);
+        Button.transform.position = Vector3.MoveTowards(Button.transform.position, buttonPosUp, 0f);
+        Vector3 newPosEnd = new Vector3 (endingPanel.transform.position.x, +15f, 0f);
+        endingPanel.transform.position = Vector3.MoveTowards(endingPanel.transform.position, newPosEnd, step);
+        if (endingPanel.transform.position == newPosEnd)
+        {
+            UtilScript.GoToScene("GameScene");
+        }
     }
 
     #endregion
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+    {
+        Debug.Log("scene loaded");
+        //CurrentState = State.CreateBlank;
+    }
 
 }

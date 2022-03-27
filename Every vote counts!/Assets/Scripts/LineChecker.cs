@@ -21,7 +21,7 @@ public class LineChecker : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D (Collision2D col)
+    void OnTriggerEnter2D (Collider2D col)
     {  
             Destroy(myManager.LineVote);
             Debug.Log("col entered!");
@@ -29,6 +29,7 @@ public class LineChecker : MonoBehaviour
             GameManager.PanelVoted = Panel;
             myManager.LineVote = col.gameObject;
             myManager.CurrentState = GameManager.State.CheckVote;
+            col.GetComponent<Collider2D>().enabled = false;
             //Debug.Log(myManager.CurrentState);
             // если линия колизится с 
     }

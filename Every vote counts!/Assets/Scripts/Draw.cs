@@ -28,12 +28,6 @@ public class Draw : MonoBehaviour
     void Update()
     {
         StatementChecker();
-        if (LineWasStarted == true && Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("debug the line");
-            //BakeLineDebuger(currentLine);
-            
-        }
     }
 
     void StatementChecker()
@@ -47,7 +41,6 @@ public class Draw : MonoBehaviour
                     if(Input.GetMouseButtonDown(0)) 
                     {
                         CreateLine();
-
                     }
 
                     if(Input.GetMouseButton(0))
@@ -88,20 +81,5 @@ public class Draw : MonoBehaviour
         lineRenderer.positionCount++;
         lineRenderer.SetPosition(lineRenderer.positionCount -1, newFingerPos);
         edgeCollider.points = fingerPositions.ToArray();
-    }
-
-    public static void BakeLineDebuger(GameObject lineObj)
-    {
-        var CreatedLineRenderer = lineObj.GetComponent<LineRenderer>();
-        Material LineMat = CreatedLineRenderer.material;
-        var meshFilter = lineObj.AddComponent<MeshFilter>();
-        Mesh mesh = new Mesh();
-        CreatedLineRenderer.BakeMesh(mesh);
-        meshFilter.sharedMesh = mesh;
-
-        var meshRenderer = lineObj.AddComponent<MeshRenderer>();
-        meshRenderer.material = LineMat;
-
-        GameObject.Destroy(CreatedLineRenderer);
     }
 }
