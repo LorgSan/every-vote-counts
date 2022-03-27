@@ -312,7 +312,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Pootin V.V.
+  m_Text: Zyulyanov Communadiy Beekeeperovich
 --- !u!1 &1270762606575971070
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Pootin V.V.
+  m_Text: Jeerinovskiy Parodimir Wolfovich
 --- !u!1 &2389430158591663878
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,8 +587,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "1952, born in Moscow, board member, Prime Minister, \nnominated by the
-    ruling political party."
+  m_Text: "Plans country's transformation into a parliamentary republic, \npolitical
+    views fall under the concepts of imperial nationalism, \nirredentism and revanchism.
+    Declared that Hitler's ideology \ncontained nothing negative in itself."
 --- !u!1 &3586548909337604798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,8 +1466,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "1952, born in Moscow, board member, Prime Minister, \nnominated by the
-    ruling political party."
+  m_Text: "Nationalist-authoritarian form of government. \nResponsible for multiple
+    invasions and war outbreaks. \nNo freedom of speech. Political anti-democratism,
+    \npractical conservatism, imperialism and traditionalism."
 --- !u!1 &6083498266288496022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,8 +1547,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "1952, born in Moscow, board member, Prime Minister, \nnominated by the
-    ruling political party."
+  m_Text: "Journalist, actress, media producer. Famous reality \ntelevision host.
+    Her father was a long time friend of \nBootin B. B. Very acquainted with the
+    political elite and \nthe ruling party members."
 --- !u!1 &6565319127065274466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1628,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Pootin V.V.
+  m_Text: Bootin Bloodimir Bloodimirovich
 --- !u!1 &6636268054636299464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,8 +2061,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "1952, born in Moscow, board member, Prime Minister, \nnominated by the
-    ruling political party."
+  m_Text: "Head of the Communist Party. Previosly, supported multiple \nannexation
+    cases, opposed mandatory vaccination during \na global pandemic. Believes that
+    the first communist \nwas Jesus Christ."
 --- !u!1 &8168741881637940974
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2142,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Huyutin H.H.
+  m_Text: Chatterchak Fictiya Puppetovna
 --- !u!1 &8527220561751437858
 GameObject:
   m_ObjectHideFlags: 0

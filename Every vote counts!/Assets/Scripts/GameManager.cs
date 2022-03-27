@@ -169,7 +169,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("not putin!");
             CurrentState = State.SwitchVote;
-        } else CurrentState = State.End;
+        } else         
+        
+        if (PanelVoted.transform.position == putinPos)
+        {
+            CurrentState = State.Vote;
+            //PanelVoted = null;
+        }
     }
 
     public static GameObject TickVoted;
