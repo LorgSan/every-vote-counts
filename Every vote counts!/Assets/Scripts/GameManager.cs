@@ -37,8 +37,9 @@ public class GameManager : MonoBehaviour
         GiveBlank,
         Vote,
         CheckVote,
-        Unvote,
         SwitchVote,
+        End
+        
     }
 
     private State _currentState;
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
     public GameObject ballotPanel;
     public static bool AllowDraw = false;
     float step;
+    bool FirstVote = false;
+    GameObject Button;
 
         // <summary>
     // Sets any initial values or one off methods when we're moving between states
@@ -92,6 +95,7 @@ public class GameManager : MonoBehaviour
                 GameObject canvas1 = ballot.transform.GetChild(0).gameObject;
                 canvas1.GetComponent<Canvas>().worldCamera = cam;
                 ballotPanel = canvas1.transform.GetChild(0).gameObject;
+                Button = ballotPanel.transform.GetChild(0).gameObject;
                 CurrentState = State.GiveBlank;
                  break;
             case State.GiveBlank:
@@ -101,6 +105,9 @@ public class GameManager : MonoBehaviour
              case State.SwitchVote:
                 OneTimeSwitchVote();
                  break;
+            case State.End:
+                //LinesDestroyer();
+                break;
          }
      }
 
@@ -117,12 +124,16 @@ public class GameManager : MonoBehaviour
                 AllowDraw = true;
                 break;
             case State.CheckVote:
-                Debug.Log("checking");
-                CheckVote();
-                //Debug.Log("Voting!");
+                if (!Input.GetMouseButton(0)){
+                     AllowDraw = false;
+                    CheckVote();
+                }
                 break;
             case State.SwitchVote:     
                 SwitchVote();
+                break;
+            case State.End:
+                FinishButton();
                 break;
         }
     }
@@ -135,8 +146,8 @@ public class GameManager : MonoBehaviour
 
         if (ballotPanel.transform.position.y == 0f)
         {
-            step = 4f * Time.deltaTime;
-            Vector3 newPosX = new Vector3(-1f, ballotPanel.transform.position.y, +1f);
+            step = 7f * Time.deltaTime;
+            Vector3 newPosX = new Vector3(0f, ballotPanel.transform.position.y, +1f);
             ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosX, step);
             if (ballotPanel.transform.position == newPosX)
             {
@@ -147,12 +158,18 @@ public class GameManager : MonoBehaviour
 
     void CheckVote()
     {
+
+        if (FirstVote == false)
+        {
+            FirstVote = true;
+            Button.SetActive(true);
+        }
         bool IsPutin = TickVoted.GetComponent<LineChecker>().AmIPutin;
-        if (IsPutin == false)
+        if (IsPutin == false) 
         {
             Debug.Log("not putin!");
             CurrentState = State.SwitchVote;
-        } else Debug.Log("putin!");
+        } else CurrentState = State.End;
     }
 
     public static GameObject TickVoted;
@@ -160,6 +177,7 @@ public class GameManager : MonoBehaviour
     public GameObject Putin;
     public Vector3 putinPos;
     public Vector3 panelPos;
+    public GameObject LineVote;
 
     void SwitchVote()
     {
@@ -167,12 +185,31 @@ public class GameManager : MonoBehaviour
         bool IsPutin = TickVoted.GetComponent<LineChecker>().AmIPutin;
         Putin.transform.position = Vector3.MoveTowards(Putin.transform.position, panelPos, step);
         PanelVoted.transform.position = Vector3.MoveTowards(PanelVoted.transform.position, putinPos, step);
+        //if (Vector3.Distance(Putin.transform.position, panelPos) < 0.01f)
+        if (PanelVoted.transform.position == putinPos)
+        {
+            CurrentState = State.Vote;
+            //PanelVoted = null;
+        }
+
     }
 
     void OneTimeSwitchVote()
     {
         putinPos = Putin.transform.position;
         panelPos = PanelVoted.transform.position;
+    }
+
+    List<LineRenderer> lineChildren;
+    public void FinishButton()
+    {
+        AllowDraw = false;
+        //ballotPanel.GetComponent<Animator>().SetTrigger("End");
+
+        step = 20f * Time.deltaTime;
+        Vector3 newPosUp = new Vector3 (ballotPanel.transform.position.x, +12f, 0f);
+        ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosUp, step);
+
     }
 
     #endregion

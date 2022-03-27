@@ -304,6 +304,10 @@ MonoBehaviour:
   cam: {fileID: 1176203356}
   ballot: {fileID: 0}
   ballotPanel: {fileID: 0}
+  Putin: {fileID: 0}
+  putinPos: {x: 0, y: 0, z: 0}
+  panelPos: {x: 0, y: 0, z: 0}
+  LineVote: {fileID: 0}
 --- !u!4 &1708248703
 Transform:
   m_ObjectHideFlags: 0
