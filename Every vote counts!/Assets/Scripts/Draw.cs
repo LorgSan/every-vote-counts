@@ -17,10 +17,14 @@ public class Draw : MonoBehaviour
     //without this it sometimes lags and doesnt finish the line if the ending was outside the collision
     GameManager myManager; //gamemanager instance saving
 
+    [SerializeField] GameObject pen;
+    Pen penScript;
+
     // Start is called before the first frame update
     void Start()
     {
         myManager = GameManager.FindInstance();      //gamemanager instance saving   
+        penScript = pen.GetComponent<Pen>();
     }
 
     // Update is called once per frame
@@ -38,25 +42,28 @@ public class Draw : MonoBehaviour
 
                 if(col != null) //and if there is 
                 {
-                    if(Input.GetMouseButtonDown(0))  //on button down we do the creating line function
+                    if (col.gameObject.tag == "Ballot" || col.gameObject.tag == "Tick")
                     {
-                        CreateLine();
-                    }
+                        if(Input.GetMouseButtonDown(0))  //on button down we do the creating line function
+                        {
+                            CreateLine();
+                            penScript.CurrentState = Pen.State.Drawing;
+                        }
 
-                    if(Input.GetMouseButton(0)) //after that if the mouse is still down we update the line
-                    {
-                        if (LineWasStarted == true){
+                        if(Input.GetMouseButton(0)) //after that if the mouse is still down we update the line
+                        {
+                            if (LineWasStarted == true){
                         
-                            Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                            ////basically if the mouse position changed we update the line
-                            if (Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count -1]) > 0.1f)
-                            {
-                                UpdateLine(tempFingerPos);
+                                Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                                ////basically if the mouse position changed we update the line
+                                if (Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count -1]) > 0.1f)
+                                {
+                                    UpdateLine(tempFingerPos);
+                                }
                             }
                         }
-                    }                     
-                }
-
+                    }         
+                } 
             }          
 
     }

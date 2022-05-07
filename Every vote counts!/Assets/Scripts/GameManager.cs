@@ -164,7 +164,10 @@ public class GameManager : MonoBehaviour
                 GiveBlank();
                 break;
             case State.Vote:
+            if (pen.CurrentState != Pen.State.Untouched)
+            {
                 AllowDraw = true;
+            }
                 break;
             case State.CheckVote:
                 if (!Input.GetMouseButton(0))
@@ -189,6 +192,7 @@ public class GameManager : MonoBehaviour
     public static GameObject PanelVoted; //and the panel it was assigned to 
     [HideInInspector]
     public GameObject LineVote;//used in the linechecker.cs to delete the previous line that voted
+    [SerializeField] Pen pen;
 
     void GiveBlank() //this thing moves the ballot into the screen
     {
@@ -207,6 +211,7 @@ public class GameManager : MonoBehaviour
             {
                 CurrentState = State.Vote; //we change the state
                 //to the state that just allows us to draw and vote at any point
+                pen.CurrentState = Pen.State.GivePen;
             }
         }
     }
@@ -244,6 +249,7 @@ public class GameManager : MonoBehaviour
         if (PanelVoted.transform.position == putinPos) //we switch vote when one of them finishes the move (it happens simultaneously anyway)
         {
             CurrentState = State.Vote;
+            //AllowDraw = true;
             //PanelVoted = null;
         }
 
