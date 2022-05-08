@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     Vector3 ballotOffset; //this is used so that ballot is dragged by the mouse position without snapping to the center
     [SerializeField] GameObject urnMask;
     [SerializeField] GameObject urnBlocker;
+    [SerializeField] AudioSource soundsSource;
 
     void Start()
     {
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
         RunStates(); //this is a updated state switch void
         InputChecker(); //this void has more of a utility use and just checks a bunch of stuff
         //Debug.Log(CurrentState);
+        Debug.Log(graphicsHolder.transform.localScale);
     }   
 
     void InputChecker()
@@ -73,8 +75,10 @@ public class GameManager : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 //Debug.Log(ballotPanel.transform.position);
-                ballotPanel.transform.localScale = new Vector3(1f, 1f, 1f);
-                ballotPanel.transform.SetSiblingIndex(3);
+                ballotPanel.transform.localScale = new Vector3(2.5f, 2.5f, 1f);
+                ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
+                Debug.Log("mouse down");
+                ballotPanel.transform.SetSiblingIndex(4);
             }
             if (Input.GetMouseButton(1))
             { 
@@ -85,7 +89,8 @@ public class GameManager : MonoBehaviour
             if (Input.GetMouseButtonUp(1))
             {
                 ballotPanel.transform.SetSiblingIndex(2);
-                ballotPanel.transform.localScale = ballotScale;
+                ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
+                ballotPanel.transform.localScale = new Vector3 (1f, 1f, 1f);
                 ballotPanel.transform.position = ballotPos;
             }
 
@@ -292,6 +297,7 @@ public class GameManager : MonoBehaviour
         {
             FirstVote = true; //and set as true to never do that again
             //Button.SetActive(true);
+            soundsSource.Play();
         }
 
         bool IsPutin = TickVoted.GetComponent<LineChecker>().AmIPutin; //so we just check the tick that has called the state if it's putin
@@ -304,7 +310,7 @@ public class GameManager : MonoBehaviour
 
     void OpenUrn()
     {
-        float step = 10f * Time.deltaTime;
+        float step = 12f * Time.deltaTime;
         Vector3 urnMove = new Vector3 (urnBlocker.transform.position.x, -5f, 1f);
         urnBlocker.transform.position = Vector3.MoveTowards(urnBlocker.transform.position, urnMove, step);
     }
@@ -331,7 +337,7 @@ public class GameManager : MonoBehaviour
         ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, endPosition, step);
         if (ballotPanel.transform.position == endPosition)
         {
-            UtilScript.GoToScene("GameScene");
+            UtilScript.GoToScene("EndScene");
         }
 
     }

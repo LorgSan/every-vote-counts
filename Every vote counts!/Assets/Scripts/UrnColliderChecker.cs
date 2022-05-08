@@ -5,6 +5,7 @@ using UnityEngine;
 public class UrnColliderChecker : MonoBehaviour
 {
     GameManager myManager;
+    [SerializeField]AudioSource sound;
     
     void Start()
     {
@@ -13,12 +14,14 @@ public class UrnColliderChecker : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (myManager.FirstVote == true)
+        if (col.gameObject.tag == "BottomCol")
         {
-            if (col.gameObject.tag == "BottomCol")
+            if (myManager.FirstVote == true)
             {
                 myManager.hitBottom = true;
-            }   
+            } else 
+            sound.Play();
+
         }
     }
     void OnTriggerExit2D(Collider2D col)
