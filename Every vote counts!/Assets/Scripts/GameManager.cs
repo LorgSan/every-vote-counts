@@ -31,16 +31,23 @@ public class GameManager : MonoBehaviour
 
 
     Vector3 ballotScale;
-    Vector3 ballotSmallScale = new Vector3(0.18f, 0.18f,0f);
+    Vector3 ballotSmallScale = new Vector3(0.18f, 0.18f,1f);
     Vector3 ballotPos;
     public Camera cam; //I needed to set the cam for the instantianted canvas to work properly:0
     public GameObject ballotPanel; //is a gameobject on the canvas saved on the ballot prefab, bc we can't move the canvas and only stuff on it
     //public GameObject endingPanel; //this is a panel with the end text
-    public bool hitBottom = false;
+    [HideInInspector] public GameObject graphicsHolder;
+    [HideInInspector] public bool hitBottom = false;
+    //bool scaleDone = false;
+    bool isBallotDragged = false;
+    Vector3 ballotOffset; //this is used so that ballot is dragged by the mouse position without snapping to the center
+    [SerializeField] GameObject urnMask;
+    [SerializeField] GameObject urnBlocker;
 
     void Start()
     {
-        ballotScale = ballotPanel.transform.localScale;
+        graphicsHolder = ballotPanel.transform.GetChild(0).gameObject;
+        ballotScale = graphicsHolder.transform.localScale;
         CurrentState = State.GiveBlank; //we just set the state 
     }
 
@@ -49,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         RunStates(); //this is a updated state switch void
         InputChecker(); //this void has more of a utility use and just checks a bunch of stuff
+        //Debug.Log(CurrentState);
     }   
 
     void InputChecker()
@@ -58,7 +66,9 @@ public class GameManager : MonoBehaviour
             UtilScript.GoToScene("GameScene");
         }
 
-        if (pen.CurrentState == Pen.State.Untouched && CurrentState == State.Vote)
+    #region Ballot Moving with mouse
+        if (pen.CurrentState == Pen.State.Untouched && CurrentState == State.Vote) //okay I'm unsure about placing this whole mess here
+        //should've probably moved to a new script
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -79,38 +89,66 @@ public class GameManager : MonoBehaviour
                 ballotPanel.transform.position = ballotPos;
             }
 
+    #region Ballot Moving & Scaling with a mouse button
             Collider2D col = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             if (col!=null) 
             {
                 if (col.gameObject.tag == "Ballot")
                 {
+                    Debug.Log(col);
                     if (Input.GetMouseButtonDown(0))
-                    {
-                        ballotPanel.transform.SetSiblingIndex(3);
-                    }
-                    if (Input.GetMouseButton(0))
-                    {
+                    {   
+                        isBallotDragged = true;
                         Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
                         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                        ballotPanel.transform.position = new Vector3(mousePos.x, mousePos.y, ballotScale.z);
-                        Debug.Log(hitBottom);
-                        if (hitBottom == true)
-                        {
-                            float scaleSpeed =  5f * Time.deltaTime;
-                            ballotPanel.transform.localScale = Vector3.MoveTowards(ballotPanel.transform.localScale, ballotSmallScale, scaleSpeed);
-                        } else 
-                        if (hitBottom == false)
-                        {
-                            //ballotPanel.transform.localScale = ballotScale;
-                        }
-                    }
-                    if (Input.GetMouseButtonUp(0))
-                    {
-                        ballotPanel.transform.SetSiblingIndex(2);
-                        ballotPanel.transform.position = ballotPos;
+                        ballotOffset = mousePos - ballotPanel.transform.position;
+                        ballotPanel.transform.SetSiblingIndex(3);
                     }
                 }
+                
             }
+                    if (hitBottom == true)
+                    {
+                        float scaleSpeed =  5f * Time.deltaTime;
+                        graphicsHolder.transform.localScale = Vector3.MoveTowards(graphicsHolder.transform.localScale, ballotSmallScale, scaleSpeed);
+                    } else 
+                    if (hitBottom == false)
+                    {
+                        graphicsHolder.transform.localScale = ballotScale;
+                    }
+
+                    if (isBallotDragged)
+                    {
+                        if (Input.GetMouseButtonUp(0))
+                        {
+                            isBallotDragged = false;
+                            ballotPanel.transform.SetSiblingIndex(2);
+                            if (hitBottom == true)
+                            {
+                                Debug.Log("game done");
+                                CurrentState = State.End;
+                            } else 
+                            {
+                                ballotPanel.transform.position = ballotPos;
+                            }
+                            
+                            return;
+                        }
+
+                        Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
+                        mousePos = Camera.main.ScreenToWorldPoint(mousePos) - ballotOffset;
+                        ballotPanel.transform.position = new Vector3(mousePos.x, mousePos.y, ballotPos.z);
+                        Debug.Log(hitBottom);
+                    }
+                    
+    #endregion
+            
+        }
+    #endregion
+        
+        if (FirstVote == true && CurrentState != State.End)
+        {
+            OpenUrn();
         }
     }
 
@@ -144,7 +182,7 @@ public class GameManager : MonoBehaviour
 
     public static bool AllowDraw = false; //this thing checks if you're allowed to draw and is used in the Draw.cs too 
     float step; //it's just the MoveTowards thingy that changes from time to time depending on what moves
-    bool FirstVote = false; //check for the button "I voted!" to appear
+    public bool FirstVote = false; //check for the button "I voted!" to appear
     GameObject Button; //button itself
 
     #region OneTimeStateSwitcher
@@ -163,7 +201,13 @@ public class GameManager : MonoBehaviour
                 SetPosition(); 
                  break;
             case State.End:
+                urnMask.SetActive(true);
                 //LinesDestroyer();
+                AllowDraw = false;
+                pen.CurrentState = Pen.State.WaitForBallot;
+                graphicsHolder.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                //ballotPanel.transform.SetParent(urnMask.transform);
+                //urnMask.SetActive(true);
                 break;
             default:
                 Debug.Log("default state");
@@ -195,7 +239,7 @@ public class GameManager : MonoBehaviour
                 GiveBlank();
                 break;
             case State.Vote:
-            if (pen.CurrentState != Pen.State.Untouched)
+            if (pen.CurrentState == Pen.State.PickedUp || pen.CurrentState == Pen.State.Drawing)
             {
                 AllowDraw = true;
             }
@@ -211,7 +255,7 @@ public class GameManager : MonoBehaviour
                 SwitchVote();
                 break;
             case State.End:
-                //FinishButton();
+                FinishButton();
                 break;
             default:
                 //Debug.Log("default state");
@@ -227,7 +271,7 @@ public class GameManager : MonoBehaviour
 
     void GiveBlank() //this thing moves the ballot into the screen
     {
-        step = 5f * Time.deltaTime; //how smoothly/fast it moves
+        step = 7f * Time.deltaTime; //how smoothly/fast it moves
         Vector3 newPosY = new Vector3(ballotPanel.transform.position.x, -0.5f, +1f); //setting the vector3 for the ballotpanel
         //which is onle the ballot itself, not the button and the final text
         ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosY, step); //this thing actually moves it
@@ -258,6 +302,13 @@ public class GameManager : MonoBehaviour
         } else CurrentState = State.Vote; //if it is putin you can just continue playing with it, change it the way you want
     }
 
+    void OpenUrn()
+    {
+        float step = 10f * Time.deltaTime;
+        Vector3 urnMove = new Vector3 (urnBlocker.transform.position.x, -5f, 1f);
+        urnBlocker.transform.position = Vector3.MoveTowards(urnBlocker.transform.position, urnMove, step);
+    }
+
     void SwitchVote() //this thing moves the panel voted for to putin's position and him on the panel's position
     {
         step = 4f * Time.deltaTime; 
@@ -273,26 +324,17 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // public void FinishButton() //this is the endgame function that moves everything up and shows the finale text 
-    // {
-    //     AllowDraw = false; //we're not allowed to draw anymore
+    public void FinishButton() //this is the endgame function  
+    {
+        float step = 5f * Time.deltaTime;
+        Vector3 endPosition = new Vector3 (ballotPanel.transform.position.x, -15f, 1f);
+        ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, endPosition, step);
+        if (ballotPanel.transform.position == endPosition)
+        {
+            UtilScript.GoToScene("GameScene");
+        }
 
-    //     step = 3f * Time.deltaTime; //set the step lower so the people would be able to read if they want
-
-    //     Vector3 newPosUp = new Vector3 (ballotPanel.transform.position.x, +12f, 0f);
-    //     ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, newPosUp, step);
-
-    //     Vector3 buttonPosUp = new Vector3 (Button.transform.position.x, +12f, 0f);
-    //     Button.transform.position = Vector3.MoveTowards(Button.transform.position, buttonPosUp, step);
-
-    //     Vector3 newPosEnd = new Vector3 (endingPanel.transform.position.x, +15f, 0f);
-    //     endingPanel.transform.position = Vector3.MoveTowards(endingPanel.transform.position, newPosEnd, step);
-
-    //     if (endingPanel.transform.position == newPosEnd)
-    //     {
-    //         UtilScript.GoToScene("GameScene"); //when the finale text gets off the screen we restart everything
-    //     }
-    // }
+    }
 
     #endregion
 

@@ -75,7 +75,7 @@ public class Pen : MonoBehaviour
         switch (CurrentState)
         {   
             case State.GivePen:
-            float step = 5f * Time.deltaTime;
+            float step = 7f * Time.deltaTime;
             Vector3 newPosY = new Vector3(transform.position.x, 0f, 5.4f);
             transform.position = Vector3.MoveTowards(transform.position, newPosY, step);
             if (transform.position.y == newPosY.y)
@@ -113,9 +113,10 @@ public class Pen : MonoBehaviour
     {
         if (CurrentState != State.WaitForBallot && CurrentState != State.GivePen)
         {
-            Debug.Log("InputChecker going");
+            //  Debug.Log("InputChecker going");
             InputChecker(); 
         }
+        //Debug.Log(CurrentState);
         RunStates();
     }
 

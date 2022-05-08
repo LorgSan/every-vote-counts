@@ -13,9 +13,12 @@ public class UrnColliderChecker : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "BottomCol")
+        if (myManager.FirstVote == true)
         {
-            myManager.hitBottom = true;
+            if (col.gameObject.tag == "BottomCol")
+            {
+                myManager.hitBottom = true;
+            }   
         }
     }
     void OnTriggerExit2D(Collider2D col)

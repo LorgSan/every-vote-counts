@@ -72,7 +72,7 @@ public class Draw : MonoBehaviour
     {
         LineWasStarted = true;
         currentLine = Instantiate(Resources.Load("Line") as GameObject, Vector3.zero, Quaternion.identity); //we create the line prefab
-        currentLine.transform.parent = myManager.ballotPanel.transform; //put it under the ballot game object so it moves with it
+        currentLine.transform.parent = myManager.graphicsHolder.transform; //put it under the ballot game object so it moves with it
         // ^^^ for the same reason the line doesn't use the world space (and I had to change it's collider layer to not collide with ballot)
         // but collide with the tickbox
         lineRenderer = currentLine.GetComponent<LineRenderer>();  //setting the linerederer component from the instaantiated prefab
