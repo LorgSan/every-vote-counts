@@ -333,7 +333,7 @@ public class GameManager : MonoBehaviour
     public void FinishButton() //this is the endgame function  
     {
         float step = 5f * Time.deltaTime;
-        Vector3 endPosition = new Vector3 (ballotPanel.transform.position.x, -15f, 1f);
+        Vector3 endPosition = new Vector3 (ballotPanel.transform.position.x, -10f, 1f);
         ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, endPosition, step);
         if (ballotPanel.transform.position == endPosition)
         {
