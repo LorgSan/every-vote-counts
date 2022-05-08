@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pen : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class Pen : MonoBehaviour
     private Vector3 drawingEulerAngles = new Vector3 (0f, 0f, 40f);
     private Vector3 defaultPos;
 
-    [HideInInspector] public bool isPickedUp;
+    [HideInInspector] public bool isPickedUp = false;
 
     private void TransitionStates(State newState)
      {
@@ -47,22 +48,25 @@ public class Pen : MonoBehaviour
          {  case State.WaitForBallot:
                 break;
             case State.Untouched:
+                //penSprite.sortingOrder = -3;
                 GameManager.AllowDraw = false;
                 transform.eulerAngles = defaultEulerAngles;
                 transform.position = defaultPos;
                 penCol.enabled = true;
                 break;
             case State.PickedUp:
+                //penSprite.sortingOrder = 0;
                 GameManager.AllowDraw = true;
                 transform.eulerAngles = pickedUpEulerAngles;
                 penCol.enabled = false;
+
                 break;
             case State.Drawing:
                 transform.eulerAngles = drawingEulerAngles;
                 penCol.enabled = false;
                 break;
             default:
-                Debug.Log("default state");
+                //Debug.Log("default state");
                 break;
          }
      }
@@ -91,7 +95,7 @@ public class Pen : MonoBehaviour
                 transform.position = new Vector3(mousePos2.x, mousePos2.y, 0f);
                 break;
             default:
-                Debug.Log("default state");
+                //Debug.Log("default state");
                 break;
         }
     }
@@ -101,7 +105,7 @@ public class Pen : MonoBehaviour
         defaultEulerAngles = transform.eulerAngles;
         myManager = GameManager.FindInstance();
         CurrentState = State.WaitForBallot;
-        penSprite = GetComponent<SpriteRenderer>().sprite;
+        penSprite = GetComponent<Image>().sprite;
         penCol = GetComponent<BoxCollider2D>();
     }
 
@@ -109,9 +113,9 @@ public class Pen : MonoBehaviour
     {
         if (CurrentState != State.WaitForBallot && CurrentState != State.GivePen)
         {
+            Debug.Log("InputChecker going");
             InputChecker(); 
         }
-        Debug.Log(CurrentState);
         RunStates();
     }
 
@@ -137,7 +141,7 @@ public class Pen : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && CurrentState == State.Drawing)
         {
-            Debug.Log("mouse up state to picked up");
+            //Debug.Log("mouse up state to picked up");
             CurrentState = State.PickedUp;
         }
 
