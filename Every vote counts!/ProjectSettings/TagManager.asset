@@ -7,11 +7,12 @@ TagManager:
   - Pen
   - Ballot
   - Tick
+  - BottomCol
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UrnChecker
   - Water
   - UI
   - 

@@ -31,10 +31,12 @@ public class GameManager : MonoBehaviour
 
 
     Vector3 ballotScale;
+    Vector3 ballotSmallScale = new Vector3(0.18f, 0.18f,0f);
     Vector3 ballotPos;
     public Camera cam; //I needed to set the cam for the instantianted canvas to work properly:0
     public GameObject ballotPanel; //is a gameobject on the canvas saved on the ballot prefab, bc we can't move the canvas and only stuff on it
     //public GameObject endingPanel; //this is a panel with the end text
+    public bool hitBottom = false;
 
     void Start()
     {
@@ -60,7 +62,7 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
-                Debug.Log(ballotPanel.transform.position);
+                //Debug.Log(ballotPanel.transform.position);
                 ballotPanel.transform.localScale = new Vector3(1f, 1f, 1f);
                 ballotPanel.transform.SetSiblingIndex(3);
             }
@@ -75,6 +77,39 @@ public class GameManager : MonoBehaviour
                 ballotPanel.transform.SetSiblingIndex(2);
                 ballotPanel.transform.localScale = ballotScale;
                 ballotPanel.transform.position = ballotPos;
+            }
+
+            Collider2D col = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (col!=null) 
+            {
+                if (col.gameObject.tag == "Ballot")
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        ballotPanel.transform.SetSiblingIndex(3);
+                    }
+                    if (Input.GetMouseButton(0))
+                    {
+                        Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
+                        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+                        ballotPanel.transform.position = new Vector3(mousePos.x, mousePos.y, ballotScale.z);
+                        Debug.Log(hitBottom);
+                        if (hitBottom == true)
+                        {
+                            float scaleSpeed =  5f * Time.deltaTime;
+                            ballotPanel.transform.localScale = Vector3.MoveTowards(ballotPanel.transform.localScale, ballotSmallScale, scaleSpeed);
+                        } else 
+                        if (hitBottom == false)
+                        {
+                            //ballotPanel.transform.localScale = ballotScale;
+                        }
+                    }
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        ballotPanel.transform.SetSiblingIndex(2);
+                        ballotPanel.transform.position = ballotPos;
+                    }
+                }
             }
         }
     }

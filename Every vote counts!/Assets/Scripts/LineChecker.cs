@@ -22,7 +22,8 @@ public class LineChecker : MonoBehaviour //this scripts sets on all the ticking 
     }
 
     void OnTriggerEnter2D (Collider2D col) //when we collide with something (it happens to be only the line prefabs instantiated in the draw.cs)
-    {  
+    {       
+            if (col.gameObject.tag == "Tick")
             Destroy(myManager.LineVote); //we destroy the previous line that collided with any other ticking box
             //Debug.Log("col entered!");
             GameManager.TickVoted = gameObject; //send itself to the gamemanager to process
