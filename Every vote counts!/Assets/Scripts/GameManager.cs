@@ -70,33 +70,12 @@ public class GameManager : MonoBehaviour
         if (pen.CurrentState == Pen.State.Untouched && CurrentState == State.Vote) //okay I'm unsure about placing this whole mess here
         //should've probably moved to a new script
         {
-            if (Input.GetMouseButtonDown(1))
-            {
-                //Debug.Log(ballotPanel.transform.position);
-                ballotPanel.transform.localScale = new Vector3(2.5f, 2.5f, 1f);
-                ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
-                //Debug.Log("mouse down");
-                ballotPanel.transform.SetSiblingIndex(4);
-            }
-            if (Input.GetMouseButton(1))
-            { 
-                Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
-                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                ballotPanel.transform.position = new Vector3(mousePos.x, mousePos.y, ballotScale.z);
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                ballotPanel.transform.SetSiblingIndex(2);
-                ballotPanel.GetComponent<BoxCollider2D>().enabled = true;
-                ballotPanel.transform.localScale = new Vector3 (1f, 1f, 1f);
-                ballotPanel.transform.position = ballotPos;
-            }
 
     #region Ballot Moving & Scaling with a mouse button
             Collider2D col = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             if (col!=null) 
             {
-                if (col.gameObject.tag == "Ballot")
+                if (col.gameObject.tag == "BottomCol")
                 {
                     //Debug.Log(col);
                     if (Input.GetMouseButtonDown(0))
@@ -106,6 +85,28 @@ public class GameManager : MonoBehaviour
                         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
                         ballotOffset = mousePos - ballotPanel.transform.position;
                         ballotPanel.transform.SetSiblingIndex(4);
+                    }
+
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        //Debug.Log(ballotPanel.transform.position);
+                        ballotPanel.transform.localScale = new Vector3(2.5f, 2.5f, 1f);
+                        ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
+                        //Debug.Log("mouse down");
+                        ballotPanel.transform.SetSiblingIndex(4);
+                    }
+                    if (Input.GetMouseButton(1))
+                    { 
+                        Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
+                        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+                        ballotPanel.transform.position = new Vector3(mousePos.x, mousePos.y, ballotScale.z);
+                    }
+                    if (Input.GetMouseButtonUp(1))
+                    {
+                        ballotPanel.transform.SetSiblingIndex(2);
+                        ballotPanel.GetComponent<BoxCollider2D>().enabled = true;
+                        ballotPanel.transform.localScale = new Vector3 (1f, 1f, 1f);
+                        ballotPanel.transform.position = ballotPos;
                     }
                 }
                 
@@ -332,11 +333,17 @@ public class GameManager : MonoBehaviour
     public void FinishButton() //this is the endgame function  
     {
         float step = 5f * Time.deltaTime;
-        Vector3 endPosition = new Vector3 (ballotPanel.transform.position.x, -10f, 1f);
-        ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, endPosition, step);
-        if (ballotPanel.transform.position == endPosition)
+        Vector3 urnPosition = new Vector3 (urnMask.transform.position.x, 5f, 1f);
+        ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, urnPosition, step);
+        if (ballotPanel.transform.position == urnPosition)
         {
-            Fade.GetComponent<Animator>().SetTrigger("FadeOut");
+            float endStep = 5f * Time.deltaTime;
+            Vector3 endPosition = new Vector3 (ballotPanel.transform.position.x, -7f, 1f);
+            ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, endPosition, endStep);
+            if (ballotPanel.transform.position == endPosition)
+            {
+              Fade.GetComponent<Animator>().SetTrigger("FadeOut");  
+            }
         }
 
     }

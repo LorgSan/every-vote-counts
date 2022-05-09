@@ -28,5 +28,22 @@ public class UrnColliderChecker : MonoBehaviour
     {
         myManager.hitBottom = false;
     }
+
+    // void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     if (col.gameObject.tag == "BottomCol")
+    //     {
+    //         if (myManager.FirstVote == true)
+    //         {
+    //             myManager.hitBottom = true;
+    //         } else 
+    //         sound.Play();
+    //     }
+    // }
+
+    // void OnCollisionExit2D(Collision2D col)
+    // {
+    //     myManager.hitBottom = false;
+    // }
 }
 

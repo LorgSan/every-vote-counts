@@ -50,12 +50,14 @@ public class Pen : MonoBehaviour
             case State.Untouched:
                 //penSprite.sortingOrder = -3;
                 GameManager.AllowDraw = false;
+                myManager.ballotPanel.GetComponent<BoxCollider2D>().enabled = true;
                 transform.eulerAngles = defaultEulerAngles;
                 transform.position = defaultPos;
                 penCol.enabled = true;
                 break;
             case State.PickedUp:
                 //penSprite.sortingOrder = 0;
+                myManager.ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
                 GameManager.AllowDraw = true;
                 transform.eulerAngles = pickedUpEulerAngles;
                 penCol.enabled = false;

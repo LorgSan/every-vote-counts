@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 315963685}
   - component: {fileID: 315963682}
   - component: {fileID: 315963684}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: MaskObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ RectTransform:
   m_LocalScale: {x: 0.6084205, y: 0.6084205, z: 0.6084205}
   m_Children: []
   m_Father: {fileID: 1829992149}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -708,6 +708,89 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470338607}
+  m_CullTransparentMesh: 1
+--- !u!1 &538098798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538098799}
+  - component: {fileID: 538098801}
+  - component: {fileID: 538098800}
+  m_Layer: 5
+  m_Name: Legend
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &538098799
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538098798}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.016541468, y: 0.016541468, z: 0.016541468}
+  m_Children: []
+  m_Father: {fileID: 1829992149}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -42.1, y: 24}
+  m_SizeDelta: {x: 160, y: 47.89}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &538098800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538098798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.882353, g: 0.9215687, b: 0.77647066, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 6a1a144345a06cc43a96dbc2df647208, type: 3}
+    m_FontSize: 150
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 150
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'LMB to drag/draw
+
+    RMB to zoom in
+
+    R to reload'
+--- !u!222 &538098801
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538098798}
   m_CullTransparentMesh: 1
 --- !u!1 &577778927
 GameObject:
@@ -1606,6 +1689,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 8.591123, y: 8.591123, z: 8.591123}
   m_Children:
+  - {fileID: 538098799}
   - {fileID: 342586633}
   m_Father: {fileID: 825125250}
   m_RootOrder: 0
@@ -2336,32 +2420,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Putler Bloodimir Bloodimirovich
---- !u!61 &1131731741116444541
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3241377817751574353}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.038410187, y: -0.00046539307}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 77.95078, y: 99.995636}
-  m_EdgeRadius: 0
 --- !u!224 &1222072408611460553
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2966,7 +3024,7 @@ GameObject:
   - component: {fileID: 3241377817751574352}
   - component: {fileID: 3241377817751574358}
   - component: {fileID: 3241377817751574359}
-  - component: {fileID: 1131731741116444541}
+  - component: {fileID: 3241377817751574354}
   m_Layer: 0
   m_Name: Background
   m_TagString: Ballot
@@ -2974,6 +3032,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!61 &3241377817751574354
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241377817751574353}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.23908234, y: 0.19771957}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 78.4787, y: 100.23995}
+  m_EdgeRadius: 0
 --- !u!222 &3241377817751574358
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3436,9 +3520,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6654756640936447828}
-  - component: {fileID: 4821988082607989837}
   - component: {fileID: 4821988082607989839}
-  m_Layer: 3
+  - component: {fileID: 4821988082607989837}
+  m_Layer: 0
   m_Name: BallotPanel
   m_TagString: BottomCol
   m_Icon: {fileID: 0}
@@ -3458,18 +3542,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -10.405304, y: -178.51805}
+  m_Offset: {x: -11.0867, y: -0.4257202}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 25.6, y: 32.8}
-    newSize: {x: 25.6, y: 32.8}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 261.9218, y: 21.966034}
+  m_Size: {x: 263.14917, y: 338.22223}
   m_EdgeRadius: 0
 --- !u!222 &4821988082607989839
 CanvasRenderer:
