@@ -14,7 +14,7 @@ public class EndScene : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.R)) //it's just an easy fast scene reloading
         {
-            UtilScript.GoToScene("GameScene");
+            UtilScript.GoToScene("StartScene");
         }
 
         if (OnPlace==false)

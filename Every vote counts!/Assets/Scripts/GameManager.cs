@@ -57,15 +57,13 @@ public class GameManager : MonoBehaviour
     {
         RunStates(); //this is a updated state switch void
         InputChecker(); //this void has more of a utility use and just checks a bunch of stuff
-        //Debug.Log(CurrentState);
-        Debug.Log(graphicsHolder.transform.localScale);
     }   
 
     void InputChecker()
     {
         if (Input.GetKey(KeyCode.R)) //it's just an easy fast scene reloading
         {
-            UtilScript.GoToScene("GameScene");
+            UtilScript.GoToScene("StartScene");
         }
 
     #region Ballot Moving with mouse
@@ -77,7 +75,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log(ballotPanel.transform.position);
                 ballotPanel.transform.localScale = new Vector3(2.5f, 2.5f, 1f);
                 ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
-                Debug.Log("mouse down");
+                //Debug.Log("mouse down");
                 ballotPanel.transform.SetSiblingIndex(4);
             }
             if (Input.GetMouseButton(1))
@@ -89,7 +87,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetMouseButtonUp(1))
             {
                 ballotPanel.transform.SetSiblingIndex(2);
-                ballotPanel.GetComponent<BoxCollider2D>().enabled = false;
+                ballotPanel.GetComponent<BoxCollider2D>().enabled = true;
                 ballotPanel.transform.localScale = new Vector3 (1f, 1f, 1f);
                 ballotPanel.transform.position = ballotPos;
             }
@@ -100,7 +98,7 @@ public class GameManager : MonoBehaviour
             {
                 if (col.gameObject.tag == "Ballot")
                 {
-                    Debug.Log(col);
+                    //Debug.Log(col);
                     if (Input.GetMouseButtonDown(0))
                     {   
                         isBallotDragged = true;
@@ -130,7 +128,7 @@ public class GameManager : MonoBehaviour
                             ballotPanel.transform.SetSiblingIndex(2);
                             if (hitBottom == true)
                             {
-                                Debug.Log("game done");
+                                //.Log("game done");
                                 CurrentState = State.End;
                             } else 
                             {
@@ -143,7 +141,7 @@ public class GameManager : MonoBehaviour
                         Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
                         mousePos = Camera.main.ScreenToWorldPoint(mousePos) - ballotOffset;
                         ballotPanel.transform.position = new Vector3(mousePos.x, mousePos.y, ballotPos.z);
-                        Debug.Log(hitBottom);
+                        //Debug.Log(hitBottom);
                     }
                     
     #endregion
@@ -215,7 +213,7 @@ public class GameManager : MonoBehaviour
                 //urnMask.SetActive(true);
                 break;
             default:
-                Debug.Log("default state");
+                //Debug.Log("default state");
                 break;
          }
      }
@@ -330,6 +328,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    [SerializeField] GameObject Fade;
     public void FinishButton() //this is the endgame function  
     {
         float step = 5f * Time.deltaTime;
@@ -337,7 +336,7 @@ public class GameManager : MonoBehaviour
         ballotPanel.transform.position = Vector3.MoveTowards(ballotPanel.transform.position, endPosition, step);
         if (ballotPanel.transform.position == endPosition)
         {
-            UtilScript.GoToScene("EndScene");
+            Fade.GetComponent<Animator>().SetTrigger("FadeOut");
         }
 
     }
