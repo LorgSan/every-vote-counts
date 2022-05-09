@@ -11,15 +11,15 @@ public static void GoToScene(string sceneName)
    SceneManager.LoadScene(sceneName);
 }
 
-public static Vector3 SaveOffset(Transform objectToMove)
+public static Vector3 SaveOffset(Transform objectToSaveFrom) //saving the offset between the object pivot and the mouse to use in the movewithmouse
 {
    Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
    mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-   Vector3 ballotOffset = mousePos - objectToMove.position;
+   Vector3 ballotOffset = mousePos - objectToSaveFrom.position;
    return ballotOffset;
 }
 
-public static void MoveWithMouse(Transform objectToMove, Vector3 offset)
+public static void MoveWithMouse(Transform objectToMove, Vector3 offset) //this function drags the object with along with the mouse
 {
    Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
    mousePos = Camera.main.ScreenToWorldPoint(mousePos) - offset;

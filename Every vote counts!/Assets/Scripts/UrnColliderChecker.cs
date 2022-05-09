@@ -12,9 +12,9 @@ public class UrnColliderChecker : MonoBehaviour
         myManager = GameManager.FindInstance();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col) //we just check if we hit the right collider when the ballot is dragged
     {
-        if (col.gameObject.tag == "BottomCol")
+        if (col.gameObject.tag == "BottomCol" && myManager.isBallotDragged == true)
         {
             if (myManager.FirstVote == true)
             {
@@ -28,22 +28,5 @@ public class UrnColliderChecker : MonoBehaviour
     {
         myManager.hitBottom = false;
     }
-
-    // void OnCollisionEnter2D(Collision2D col)
-    // {
-    //     if (col.gameObject.tag == "BottomCol")
-    //     {
-    //         if (myManager.FirstVote == true)
-    //         {
-    //             myManager.hitBottom = true;
-    //         } else 
-    //         sound.Play();
-    //     }
-    // }
-
-    // void OnCollisionExit2D(Collision2D col)
-    // {
-    //     myManager.hitBottom = false;
-    // }
 }
 

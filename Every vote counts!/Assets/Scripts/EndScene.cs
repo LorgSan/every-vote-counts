@@ -17,11 +17,10 @@ public class EndScene : MonoBehaviour
             UtilScript.GoToScene("StartScene");
         }
 
-        if (OnPlace==false)
+        if (OnPlace==false) //decided not to make a statemachine here and just use this bool
         {
-            float step = 8f* Time.deltaTime;
             Vector3 certificateMove = new Vector3 (certificate.transform.position.x, -0.9f, 1f);
-            certificate.transform.position = Vector3.MoveTowards(certificate.transform.position, certificateMove, step);  
+            certificate.transform.position = UtilScript.VectorLerp(certificate.transform.position, certificateMove, 8f); 
             if (certificate.transform.position == certificateMove)
             {
                 certificatePos = certificate.transform.position;
@@ -35,16 +34,12 @@ public class EndScene : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0))
                 {   
-                    Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
-                    mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                    offset = mousePos - certificate.transform.position;
+                    offset = UtilScript.SaveOffset(certificate.transform);
                 }
 
                 if (Input.GetMouseButton(0))
                 {
-                    Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
-                    mousePos = Camera.main.ScreenToWorldPoint(mousePos) - offset;
-                    certificate.transform.position = new Vector3(mousePos.x, mousePos.y, certificatePos.z);
+                    UtilScript.MoveWithMouse(certificate.transform, offset);
                 }
 
                 if (Input.GetMouseButtonUp(0))
@@ -54,16 +49,12 @@ public class EndScene : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
-                    mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                    offset = mousePos - certificate.transform.position;
+                    offset = UtilScript.SaveOffset(certificate.transform);
                     certificate.transform.localScale = new Vector3(90f, 90f, 1f);
                 }
                 if (Input.GetMouseButton(1))
                 { 
-                    Vector3 mousePos = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0f);
-                    mousePos = Camera.main.ScreenToWorldPoint(mousePos) - offset;
-                    certificate.transform.position = new Vector3(mousePos.x, mousePos.y, certificatePos.z);
+                    UtilScript.MoveWithMouse(certificate.transform, offset);
                 }
                 if (Input.GetMouseButtonUp(1))
                 {

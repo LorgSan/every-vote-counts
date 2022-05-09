@@ -98,49 +98,47 @@ public class Pen : MonoBehaviour
         }
     }
 
-    void Start()
+    void Start() //just setting the variabes
     {   
         defaultEulerAngles = transform.eulerAngles;
-        myManager = GameManager.FindInstance();
+        myManager = GameManager.FindInstance(); 
         CurrentState = State.WaitForBallot;
         penCol = GetComponent<BoxCollider2D>();
     }
 
     void Update()
     {
-        if (CurrentState != State.WaitForBallot && CurrentState != State.GivePen)
+        if (CurrentState != State.WaitForBallot && CurrentState != State.GivePen) //if the "starting" states are done
         {
-            //  Debug.Log("InputChecker going");
-            InputChecker(); 
+            InputChecker(); //we can start checking for input
         }
-        //Debug.Log(CurrentState);
-        RunStates();
+
+        RunStates(); //and run update states
     }
 
     void InputChecker()
     {
-        Collider2D col = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        //Debug.DrawLine(Camera.main.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.red);
+        Collider2D col = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)); //checking raycast
 
         if (col != null)
         {
-            if (col.gameObject.tag == "Pen")
+            if (col.gameObject.tag == "Pen") //if we hit the pen 
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0)) // and click it
                 {
-                        CurrentState = State.PickedUp;
+                        CurrentState = State.PickedUp; //the pen is picked up
                 }
             }
         } else 
+
         if (Input.GetMouseButtonDown(0))
         {
-            CurrentState = State.Untouched;
+            CurrentState = State.Untouched; //putting the pen back on its place
         }
 
-        if (Input.GetMouseButtonUp(0) && CurrentState == State.Drawing)
+        if (Input.GetMouseButtonUp(0) && CurrentState == State.Drawing) //if we were previosly drawing
         {
-            //Debug.Log("mouse up state to picked up");
-            CurrentState = State.PickedUp;
+            CurrentState = State.PickedUp; //we are going to the picked up state instead of the untouched state
         }
 
     }

@@ -612,7 +612,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cab2b06d241bc5d4b9eaaadd08e92ec9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5cec49a53f7a13498d9d879421b7a5e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1008,7 +1008,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   penCol: {fileID: 0}
-  isPickedUp: 0
 --- !u!222 &606538523
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1448,7 +1447,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -258.9, y: -95.2}
+  m_AnchoredPosition: {x: -258.9, y: -95}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1385917192
@@ -1471,7 +1470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: abf9ceace46e2284a9f6bf0c82e1b14a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b87b7bc7d0550c4ebc96e76841caebf, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1634,18 +1633,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8614164a79235e54bbdd1d467781bdcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1176203356}
-  ballotPanel: {fileID: 4821988082607989836}
-  graphicsHolder: {fileID: 0}
-  hitBottom: 0
   urnMask: {fileID: 1385917190}
   urnBlocker: {fileID: 1702916264}
   soundsSource: {fileID: 219771756}
+  Fade: {fileID: 143636179}
+  pen: {fileID: 606538522}
+  ballotPanel: {fileID: 4821988082607989836}
+  graphicsHolder: {fileID: 0}
+  hitBottom: 0
   FirstVote: 0
   Putin: {fileID: 0}
   LineVote: {fileID: 0}
-  pen: {fileID: 606538522}
-  Fade: {fileID: 143636179}
 --- !u!4 &1708248703
 Transform:
   m_ObjectHideFlags: 0

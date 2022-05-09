@@ -29,34 +29,36 @@ public class GameManager : MonoBehaviour
     //singleton is mostly done the way we normally do singletons, but withouth DontDestroyOnLoad, as I wanted to to reload the scene freely
     // so that the Start() happens again, and, considering that I don't use any other scenes, that seemed like a good decision
 
-    [SerializeField] GameObject urnMask;
-    [SerializeField] GameObject urnBlocker;
-    [SerializeField] AudioSource soundsSource;
-    [SerializeField] GameObject Fade;
-    [SerializeField] Pen pen;
-    [SerializeField] public GameObject ballotPanel; //is a gameobject on the canvas saved on the ballot prefab, bc we can't move the canvas and only stuff on it
+    public GameObject ballotPanel; //ballot object
+    [SerializeField] GameObject urnMask; //urn object that holds the collider
+    [SerializeField] GameObject urnBlocker; //urn's blocker that's getting moved after the first move
+    [SerializeField] GameObject Fade; //object that is animated to create fade in/fade out
+    [SerializeField] Pen pen; //pen :) I'm only using pen's script so i'm referencing it, not the object itself
+    [SerializeField] AudioSource soundsSource; //audiosource for some sounds!
+    // ^^ about the sound, I've never used them to a full potential and know very little about the way
+    //audiosource is supposed to work, so it's messy:] I'm sowwy
 
-    Vector3 ballotScale;
-    Vector3 ballotSmallScale = new Vector3(0.18f, 0.18f,1f);
-    Vector3 ballotPos;
+    Vector3 ballotScale; //this is a localscale of a ballot
+    Vector3 ballotSmallScale = new Vector3(0.18f, 0.18f,1f); //and this is to how small I need to scale down when we're done
+    Vector3 ballotPos; //original position to get it back to
     Vector3 ballotLMBOffset; //this is used so that ballot is dragged by the mouse position without snapping to the center
-    Vector3 ballotRMBOffset;
-    Vector3 putinPos; //his position
-    Vector3 panelPos; //position of the actual panel voted for
-    [HideInInspector] public GameObject graphicsHolder;
-    [HideInInspector] public bool hitBottom = false;
-    [HideInInspector] public static bool AllowDraw = false; //this thing checks if you're allowed to draw and is used in the Draw.cs too 
-    [HideInInspector] public bool FirstVote = false; //check for the button "I voted!" to appear
-    [HideInInspector] public GameObject Putin; //main putin panel saved through the LineChecker.cs 
-    bool isBallotDragged = false;
-    bool onUrnPos = false;
-    
-    public static GameObject TickVoted; //tick that was voted!
-    public static GameObject PanelVoted; //and the panel it was assigned to 
-    [HideInInspector]
-    public GameObject LineVote; //used in the linechecker.cs to delete the previous line that voted
+    Vector3 ballotRMBOffset; //sae but with rmb inputs
+    Vector3 putinPos; //putin's panel position
+    Vector3 panelPos; //position of the last panel voted
 
-    void Start()
+    [HideInInspector] public GameObject graphicsHolder; //this is a ballotPanel child that scales down, because I don't want the panel itself to scale down (because collider)
+    [HideInInspector] public GameObject Putin; //main putin panel saved through the LineChecker.cs
+    [HideInInspector] public GameObject LineVote; //this is the line that cause the vote to trigger (we delete it afterwards so)
+    [HideInInspector] public static GameObject TickVoted; //tick that was voted!
+    [HideInInspector] public static GameObject PanelVoted; //and the panel it was assigned to
+    
+    [HideInInspector] public static bool AllowDraw = false; //this var checks if you're allowed to draw and is used in the Draw.cs too 
+    [HideInInspector] public bool isBallotDragged = false; //this var checks if we're dragging the ballot with lmb
+    [HideInInspector] public bool hitBottom = false; //this var checks if we hit the collider on the urn or not
+    [HideInInspector] public bool FirstVote = false; //check to see if the first vote was done or not
+    bool onUrnPos = false; //this thing helps me move end position with two Vector3.MoveTowards which are dragging the object in different directions
+
+    void Start() //just setting up some variables
     {
         graphicsHolder = ballotPanel.transform.GetChild(0).gameObject;
         ballotScale = graphicsHolder.transform.localScale;
@@ -83,21 +85,21 @@ public class GameManager : MonoBehaviour
         MouseInput();
     }
 
-    void MouseInput()
+    void MouseInput() //this whole new thing checks all the mouse inputs 
+    //there're some complex if statements and I'm sorry it's so messy D: 
     {
-        if (pen.CurrentState == Pen.State.Untouched && CurrentState == State.Vote) //okay I'm unsure about placing this whole mess here
-        //should've probably moved to a new script
+        if (pen.CurrentState == Pen.State.Untouched && CurrentState == State.Vote) //if we aren't drawing and can vote
         {
             Collider2D col = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             if (col!=null) 
             {
-                if (col.gameObject.tag == "BottomCol")
+                if (col.gameObject.tag == "BottomCol") //and there's a specific collision under our mouse
                 {
                     if (Input.GetMouseButtonDown(0))
-                    {   
+                    {
                         isBallotDragged = true;
                         ballotLMBOffset = UtilScript.SaveOffset(ballotPanel.transform);
-                        ballotPanel.transform.SetSiblingIndex(4);
+                        ballotPanel.transform.SetSiblingIndex(4); //this helps me swap between zOrder of the pen and the ballot
                     }
 
                     if (Input.GetMouseButtonDown(1))
@@ -120,15 +122,6 @@ public class GameManager : MonoBehaviour
                 }
                 
             }
-                    if (hitBottom == true)
-                    {
-                        graphicsHolder.transform.localScale = UtilScript.VectorLerp(graphicsHolder.transform.position, ballotSmallScale, 5f);
-                        
-                    } else 
-                    if (hitBottom == false)
-                    {
-                        graphicsHolder.transform.localScale = UtilScript.VectorLerp(graphicsHolder.transform.position, ballotScale, 5f);
-                    }
 
                     if (isBallotDragged)
                     {
@@ -144,6 +137,18 @@ public class GameManager : MonoBehaviour
                                 ballotPanel.transform.position = ballotPos;
                             }
                             return;
+                        }
+
+                        if (hitBottom == true)
+                        {
+                            float scaleSpeed =  5f * Time.deltaTime; //I'm using movetowards instead of my function becauseit doesn't work for some reason.
+                            graphicsHolder.transform.localScale = Vector3.MoveTowards(graphicsHolder.transform.localScale, ballotSmallScale, scaleSpeed);
+                            
+                        } else 
+                        if (hitBottom == false)
+                        {
+                            float scaleSpeed =  5f * Time.deltaTime;
+                            graphicsHolder.transform.localScale = Vector3.MoveTowards(graphicsHolder.transform.localScale, ballotScale, scaleSpeed);
                         }
                         UtilScript.MoveWithMouse(ballotPanel.transform, ballotLMBOffset);
                     } 
@@ -176,12 +181,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region StateMachine
-
     #region OneTimeStateSwitcher
-        // <summary>
-    // Sets any initial values or one off methods when we're moving between states
-        // </summary>
+
      private void TransitionStates(State newState)
      {
          switch (newState)
@@ -225,12 +226,14 @@ public class GameManager : MonoBehaviour
             case State.GiveBlank:
                 GiveBlank();
                 break;
+
             case State.Vote:
-            if (pen.CurrentState == Pen.State.PickedUp || pen.CurrentState == Pen.State.Drawing)
-            {
-                AllowDraw = true;
-            }
+                if (pen.CurrentState == Pen.State.PickedUp || pen.CurrentState == Pen.State.Drawing)
+                {
+                    AllowDraw = true;
+                }
                 break;
+
             case State.CheckVote:
                 if (!Input.GetMouseButton(0))
                 { //here we start the checking and moving the panels only after the person has stopped drawing the line
@@ -238,12 +241,15 @@ public class GameManager : MonoBehaviour
                     CheckVote(); 
                 }
                 break;
+                
             case State.SwitchVote:
                 SwitchVote();
                 break;
+
             case State.End:
                 FinishGame();
                 break;
+
             default:
                 //Debug.Log("default state");
                 break;
@@ -319,12 +325,10 @@ public class GameManager : MonoBehaviour
 
             if (ballotPanel.transform.position == endPosition)
             {
-                Fade.GetComponent<Animator>().SetTrigger("FadeOut");
+                Fade.GetComponent<Animator>().SetTrigger("FadeOut"); 
             }
         } 
     }
 }
-
-    #endregion
 
     #endregion
